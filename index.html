@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUBLIC SHOW</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+      color: #111;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+      min-height: 100vh;
+      background: white;
+    }
+
+    .header {
+      padding: 18px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .screen {
+      padding: 25px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 25px 0 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 10px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(500px, 100%);
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      border-top: 1px solid #ddd;
+      padding: 12px 5px;
+    }
+
+    .nav button {
+      background: transparent;
+      color: #111;
+      margin: 0;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .post {
+      margin: 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .post img,
+    .post video {
+      width: 100%;
+      display: block;
+      max-height: 500px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .post-info {
+      padding: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions button {
+      background: #eee;
+      color: #111;
+      margin: 0;
+      padding: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- LOGIN -->
+  <div id="loginScreen">
+
+    <div class="header">
+      PUBLIC SHOW
+    </div>
+
+    <div class="screen">
+
+      <h1>Welcome to PUBLIC SHOW</h1>
+
+      <p class="subtitle">
+        Photo, Video और Reels का अपना प्लेटफॉर्म
+      </p>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="मोबाइल नंबर"
+        maxlength="10"
+      >
+
+      <button onclick="sendOTP()">
+        OTP भेजें
+      </button>
+
+      <div id="otpBox" class="hidden">
+
+        <input
+          id="otp"
+          type="number"
+          placeholder="OTP डालें"
+        >
+
+        <button onclick="verifyOTP()">
+          Login करें
+        </button>
+
+      </div>
+
+      <p id="message"
+         style="text-align:center;margin-top:15px;color:#555;">
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- HOME -->
+  <div id="homeScreen" class="hidden">
+
+    <div class="header">
+      PUBLIC SHOW
+    </div>
+
+    <div class="screen">
+
+      <h2>Home Feed</h2>
+
+      <div class="post">
+
+        <div class="post-info">
+          <b>PUBLIC SHOW</b>
+          <p style="margin-top:8px;">
+            आपका पहला पोस्ट यहाँ दिखाई देगा।
+          </p>
+        </div>
+
+        <div class="actions">
+
+          <button onclick="likePost(this)">
+            ❤️ Like
+          </button>
+
+          <button onclick="commentPost()">
+            💬 Comment
+          </button>
+
+          <button onclick="sharePost()">
+            ↗ Share
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="nav">
+
+      <button onclick="showHome()">🏠 Home</button>
+      <button onclick="showReels()">🎬 Reels</button>
+      <button onclick="showUpload()">➕ Create</button>
+      <button onclick="showProfile()">👤 Profile</button>
+
+    </div>
+
+  </div>
+
+
+  <!-- REELS -->
+  <div id="reelsScreen" class="hidden">
+
+    <div class="header">
+      PUBLIC SHOW — REELS
+    </div>
+
+    <div class="screen">
+
+      <h2>Reels</h2>
+
+      <div class="post">
+
+        <video controls playsinline>
+          <source src="" type="video/mp4">
+          आपका Reel यहाँ चलेगा
+        </video>
+
+        <div class="post-info">
+          <b>PUBLIC SHOW Creator</b>
+          <p>यहाँ Reel का description आएगा।</p>
+
+          <div class="actions">
+            <button onclick="likePost(this)">❤️ Like</button>
+            <button onclick="commentPost()">💬 Comment</button>
+            <button onclick="sharePost()">↗ Share</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="nav">
+      <button onclick="showHome()">🏠 Home</button>
+      <button onclick="showReels()">🎬 Reels</button>
+      <button onclick="showUpload()">➕ Create</button>
+      <button onclick="showProfile()">👤 Profile</button>
+    </div>
+
+  </div>
+
+
+  <!-- CREATE -->
+  <div id="uploadScreen" class="hidden">
+
+    <div class="header">
+      Create Post
+    </div>
+
+    <div class="screen">
+
+      <h2>Photo / Video Upload</h2>
+
+      <input
+        id="mediaFile"
+        type="file"
+        accept="image/*,video/*"
+      >
+
+      <button onclick="previewMedia()">
+        Preview
+      </button>
+
+      <div id="preview"></div>
+
+    </div>
+
+    <div class="nav">
+      <button onclick="showHome()">🏠 Home</button>
+      <button onclick="showReels()">🎬 Reels</button>
+      <button onclick="showUpload()">➕ Create</button>
+      <button onclick="showProfile()">👤 Profile</button>
+    </div>
+
+  </div>
+
+
+  <!-- PROFILE -->
+  <div id="profileScreen" class="hidden">
+
+    <div class="header">
+      Profile
+    </div>
+
+    <div class="screen">
+
+      <h2>PUBLIC SHOW User</h2>
+
+      <p style="margin-top:15px;">
+        Followers: 0
+      </p>
+
+      <p style="margin-top:10px;">
+        Following: 0
+      </p>
+
+      <button onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
+    <div class="nav">
+      <button onclick="showHome()">🏠 Home</button>
+      <button onclick="showReels()">🎬 Reels</button>
+      <button onclick="showUpload()">➕ Create</button>
+      <button onclick="showProfile()">👤 Profile</button>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function sendOTP() {
+
+  const phone = document.getElementById("phone").value;
+
+  if (phone.length !== 10) {
+    document.getElementById("message").innerText =
+      "कृपया 10 अंकों का मोबाइल नंबर डालें।";
+    return;
+  }
+
+  document.getElementById("otpBox").classList.remove("hidden");
+
+  document.getElementById("message").innerText =
+    "OTP verification system अगले चरण में जोड़ा जाएगा।";
+}
+
+
+function verifyOTP() {
+
+  const otp = document.getElementById("otp").value;
+
+  if (otp.length < 4) {
+    document.getElementById("message").innerText =
+      "कृपया OTP डालें।";
+    return;
+  }
+
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
+}
+
+
+function hideScreens() {
+
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("reelsScreen").classList.add("hidden");
+  document.getElementById("uploadScreen").classList.add("hidden");
+  document.getElementById("profileScreen").classList.add("hidden");
+
+}
+
+
+function showHome() {
+
+  hideScreens();
+  document.getElementById("homeScreen").classList.remove("hidden");
+
+}
+
+
+function showReels() {
+
+  hideScreens();
+  document.getElementById("reelsScreen").classList.remove("hidden");
+
+}
+
+
+function showUpload() {
+
+  hideScreens();
+  document.getElementById("uploadScreen").classList.remove("hidden");
+
+}
+
+
+function showProfile() {
+
+  hideScreens();
+  document.getElementById("profileScreen").classList.remove("hidden");
+
+}
+
+
+function likePost(button) {
+
+  button.innerText = "❤️ Liked";
+
+}
+
+
+function commentPost() {
+
+  alert("Comment system अगले चरण में जोड़ा जाएगा।");
+
+}
+
+
+function sharePost() {
+
+  alert("Share system अगले चरण में जोड़ा जाएगा।");
+
+}
+
+
+function previewMedia() {
+
+  const file =
+    document.getElementById("mediaFile").files[0];
+
+  const preview =
+    document.getElementById("preview");
+
+  if (!file) {
+    preview.innerHTML = "<p>पहले Photo या Video चुनें।</p>";
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+
+  if (file.type.startsWith("video/")) {
+
+    preview.innerHTML =
+      `<video src="${url}"
+              controls
+              style="width:100%;margin-top:20px;">
+       </video>`;
+
+  } else {
+
+    preview.innerHTML =
+      `<img src="${url}"
+            style="width:100%;margin-top:20px;">`;
+
+  }
+
+}
+
+
+function logout() {
+
+  location.reload();
+
+}
+
+</script>
+
+</body>
+  </html>
